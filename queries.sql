@@ -81,7 +81,7 @@ order by 1;
 select
     TO_CHAR(s.sale_date, 'YYYY-MM') as date,
     COUNT(distinct(s.customer_id)) as total_customer,
-    SUM(p.price*s.quantity) as income
+    ROUND(SUM(p.price*s.quantity), 0) as income
 from sales s
 join products p
     USING(product_id)
