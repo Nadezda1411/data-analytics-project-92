@@ -92,23 +92,16 @@ order by 1;
 
 -- Данный запрос выводит покупателей, первая покупка которых была в ходе проведения акций
 
-select 
-    customer,
-    sale_date,
-    seller
-from (
-    select distinct on (c.customer_id) 
-        c.customer_id,
-        c.first_name || ' ' || c.last_name as customer,
-        s.sale_date as sale_date,
-        e.first_name || ' ' || e.last_name as seller
-    from sales s
-    join products p using (product_id)
-    join customers c using (customer_id)
-    join employees e on s.sales_person_id = e.employee_id
-    where p.price = 0
-    order by c.customer_id,s.sale_date
-) as results;
+select distinct on (c.customer_id) 
+    c.first_name || ' ' || c.last_name as customer,
+    s.sale_date as sale_date,
+    e.first_name || ' ' || e.last_name as seller
+from sales s
+join products p using (product_id)
+join customers c using (customer_id)
+join employees e on s.sales_person_id = e.employee_id
+where p.price = 0
+order by c.customer_id, 2;
 
 
 
